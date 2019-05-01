@@ -1,7 +1,7 @@
-import { Auth } from './auth';
+import { AuthState } from './authState';
 
 describe('Auth', () => {
   it('should create an instance', () => {
-    expect(new Auth()).toBeTruthy();
+    expect(new AuthState()).toBeTruthy();
   });
 });

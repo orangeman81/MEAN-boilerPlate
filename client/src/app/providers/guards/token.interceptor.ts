@@ -15,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (this.store.isAuthenticated && this.store.loaded) {
+        if (this.store.isAuthenticated) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Token ${this.store.token}`

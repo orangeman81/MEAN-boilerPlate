@@ -1,20 +1,20 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './api.service';
 import { Store } from '../models/store';
-import { Auth } from '../models/auth';
+import { AuthState } from '../models/authState';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable, EMPTY } from 'rxjs';
-import { map, tap, filter, flatMap } from 'rxjs/operators';
+import { map, tap, filter, flatMap, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthStore extends Store<Auth> {
+export class AuthStore extends Store<AuthState> {
 
   constructor(private api: ApiService, private router: Router) {
-    super(new Auth())
+    super(new AuthState())
   }
 
   get token() {
@@ -37,23 +37,22 @@ export class AuthStore extends Store<Auth> {
 
     return this.api.$add('auth/login', user)
       .pipe(
-        map((res: any) => {
-          res = res.user;
-          const AuthState: Auth = new Auth(
+        map(res => res.user),
+        tap((user: User) => {
+          const newState: AuthState = new AuthState(
             new User(
-              res._id,
-              res.email,
-              res.token
+              user._id,
+              user.email,
+              user.token
             ),
             true,
             "User logged successfully"
           )
-          localStorage.setItem('token', res.token);
-          this.state = AuthState;
-          this.loaded = true;
-          console.log("user logged in", this.state);
-        }),
-        tap(() => this.router.navigate(["main"]))
+          localStorage.setItem('token', user.token);
+          this.state = newState;
+          this.router.navigate(["main"])
+          console.log("user logged in", newState);
+        })
       )
   }
 
@@ -61,40 +60,48 @@ export class AuthStore extends Store<Auth> {
     return this.api.$add('auth/logout', null)
       .pipe(
         tap(() => {
-          this.state = new Auth();
-          this.loaded = false;
+          this.state = new AuthState();
           localStorage.removeItem('token');
           this.router.navigate(['login']);
+          console.log("user logged out", this.state);
         })
       );
   }
 
   $checkUser(): Observable<User> {
     if (this.isAuthenticated) {
-      return this.$loaded
+      return this.$state
         .pipe(
-          filter(loaded => !loaded),
-          flatMap(loaded => {
-            this.loaded = true;
+          map(state => state.loggedIn),
+          filter(loggedIn => !loggedIn),
+          mergeMap(() => {
             return this.api.$findAll("auth/user")
+              .pipe(
+                map(res => res.user)
+              )
           }),
-          map(res => {
-            const newState: Auth = new Auth(
+          tap((user: User) => {
+            const newState: AuthState = new AuthState(
               new User(
-                res.user._id,
-                res.user.email,
-                res.user.token
+                user._id,
+                user.email,
+                user.token
               ),
               true,
               "User logged successfully"
             );
             this.state = newState;
-            console.log("state changed", newState)
-            return res.user;
+            console.log("user logged in", newState);
           })
         )
     } else {
-      this.loaded = false;
+      const newState: AuthState = new AuthState(
+        new User(),
+        false,
+        "Token expired"
+      );
+      this.state = newState;
+      console.log("user logged out", newState);
       return EMPTY;
     }
   }

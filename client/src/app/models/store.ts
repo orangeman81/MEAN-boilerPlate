@@ -6,14 +6,10 @@ export class Store<T> {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     private state$: BehaviorSubject<T>;
     public $state: Observable<T>;
-    private loaded$: BehaviorSubject<boolean>;
-    public $loaded: Observable<boolean>;
 
     protected constructor(inistialState: T) {
         this.state$ = new BehaviorSubject<T>(inistialState);
         this.$state = this.state$.asObservable();
-        this.loaded$ = new BehaviorSubject<boolean>(false);
-        this.$loaded = this.loaded$.asObservable();
     }
 
     get state() {
@@ -22,13 +18,5 @@ export class Store<T> {
 
     set state(next: T) {
         this.state$.next(next);
-    }
-
-    get loaded() {
-        return this.loaded$.getValue();
-    }
-
-    set loaded(next: boolean) {
-        this.loaded$.next(next);
     }
 }

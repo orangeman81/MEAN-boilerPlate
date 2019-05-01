@@ -17,27 +17,26 @@ export class TodoStore extends Store<TodoState> implements Actions<Todo> {
   }
 
   findAll(): Observable<Todo[]> {
-    return this.$loaded
+
+    return this.$state
       .pipe(
+        map(state => state.loaded),
         filter(loaded => !loaded),
-        mergeMap(loaded => {
+        mergeMap(() => {
           return this.api.$findAll('todo')
             .pipe(
-              map(res => res.data),
-              tap(() => this.loaded = !loaded)
+              map(res => res.data)
             );
         }),
-        map(todo => {
+        tap((todo: Todo[]) => {
           const newState: TodoState = {
             todos: todo,
             loaded: true
           }
           this.state = newState;
-          console.log('store loaded: ' + this.loaded);
-          console.log(todo);
-          return todo;
+          console.log('store loaded ', newState);
         })
-      );
+      )
   };
 
   findOne(id: string): Observable<Todo> { return };
@@ -45,15 +44,15 @@ export class TodoStore extends Store<TodoState> implements Actions<Todo> {
   addOne(payload: Todo): Observable<Todo> {
     return this.api.$add('todo/create', payload)
       .pipe(
-        map(res => {
-          res = res.data;
+        map(res => res.data),
+        tap((todo: Todo) => {
           const newState = {
             ...this.state,
-            todos: [...this.state.todos, res],
+            todos: [...this.state.todos, todo],
             loaded: true
           };
           this.state = newState;
-          return res;
+          console.log('store loaded ', newState);
         })
       );
   };

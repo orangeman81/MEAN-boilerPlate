@@ -1,5 +1,5 @@
 import { Todo } from './../models/todo';
-import { Auth } from './../models/auth';
+import { AuthState } from '../models/authState';
 import { AuthStore } from '../providers/auth-store.service';
 import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -14,7 +14,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class TodoComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
-  $loaded: Observable<boolean> = this.store.$loaded;
+  $loaded: Observable<boolean>;
   $userId: Observable<string>;
 
   constructor(private store: TodoStore, private auth: AuthStore) { }
@@ -22,8 +22,14 @@ export class TodoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.$userId = this.auth.$state
       .pipe(
-        map((auth: Auth) => auth.user._id)
-      )
+        map((auth: AuthState) => auth.user._id)
+      );
+
+    this.$loaded = this.store.$state
+      .pipe(
+        map(state => state.loaded)
+      );
+
     this.sub = this.store.findAll()
       .subscribe();
   }

@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export class Auth {
+export class AuthState {
     constructor(
         public user: User = new User(),
         public loggedIn: boolean = false,

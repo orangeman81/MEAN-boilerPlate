@@ -1,4 +1,4 @@
-import { Auth } from './../../models/auth';
+import { AuthState } from '../../models/authState';
 import { Subscription, Observable } from 'rxjs';
 import { AuthStore } from '../../providers/auth-store.service';
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
@@ -23,7 +23,7 @@ export class NavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.$logged = this.store.$state
       .pipe(
-        map((state: Auth) => state.loggedIn)
+        map((state: AuthState) => state.loggedIn)
       )
     this.sub = this.store.$checkUser()
       .subscribe((user: User) => this.user = user);
