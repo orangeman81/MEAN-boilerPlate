@@ -1,0 +1,22 @@
+@import '../../../../leaves/variables';
+@import '../../../../leaves/dropdown';
+:host {
+    input {
+        cursor: pointer;
+    }
+    .menu {
+        position: relative;
+        &>span {
+            position: absolute;
+            right: 8px;
+            bottom: 0;
+            cursor: pointer;
+        }
+        .dropdown {
+            width: 100%;
+            li {
+                font-weight: 600;
+            }
+        }
+    }
+}

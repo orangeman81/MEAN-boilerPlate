@@ -1,0 +1,16 @@
+<main class="container">
+  <header>
+    <span>
+      <h1>New Todo</h1>
+      <p>Create a new Todo</p>
+    </span>
+    <nav class="actions">
+      <a [routerLink]="['/todo']">
+        <i class="material-icons tile-icon">arrow_back</i>
+      </a>
+    </nav>
+  </header>
+  <hr>
+  <app-todo-form (save)="save($event)"></app-todo-form>
+  <app-todo-list *ngIf="$loaded | async"></app-todo-list>
+</main>

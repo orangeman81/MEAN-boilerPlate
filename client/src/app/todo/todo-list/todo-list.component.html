@@ -1,0 +1,34 @@
+<header>
+  <span>
+    <h1>Todos</h1>
+    <p>list of all Todo</p>
+  </span>
+</header>
+<lv-search-bar (sendQuery)="loadSearch($event)"></lv-search-bar>
+<lv-list>
+  <li *ngFor="let todo of ($todos | async).todos">
+    <span class="withIcon">
+      <span>
+        <i class="material-icons mr-24">check</i>
+      </span>
+      <header>
+        <h3>{{todo?.title}}</h3>
+        <p>{{todo?.description}}</p>
+      </header>
+    </span>
+    <footer class="actions">
+      <button (click)="openDialog(todo)">delete</button>
+      <a [routerLink]="['/warehouse/details', todo._id]" class="btn">details</a>
+    </footer>
+  </li>
+</lv-list>
+<lv-dialog *ngIf="dialog">
+  <span>
+    <h3>Delete {{dialogPayload.name}}?</h3>
+    <p>{{dialogPayload.serial}}</p>
+  </span>
+  <span class="actions">
+    <button (click)="dialog = false">cancel</button>
+    <button (click)="delete()">delete</button>
+  </span>
+</lv-dialog>

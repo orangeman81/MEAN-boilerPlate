@@ -1,0 +1,12 @@
+<main class="container">
+  <header>
+    <span>
+      <h1>Login</h1>
+      <p>Sign in with your credentials</p>
+    </span>
+  </header>
+  <hr>
+  <app-login-form (save)="signIn($event)">
+    <p class="error" *ngIf="message$ | async">{{message$ | async}}</p>
+  </app-login-form>
+</main>

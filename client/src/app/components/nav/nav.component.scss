@@ -1,0 +1,26 @@
+@import '../../../leaves/variables';
+nav {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    background-color: $color;
+    margin-bottom: 56px;
+    border-bottom: solid 1px $lineGray;
+    ul {
+        display: flex;
+        align-items: center;
+        i {
+            line-height: inherit;
+        }
+        li {
+            position: relative
+        }
+        li:not(:last-child) {
+            margin-right: 16px
+        }
+    }
+}

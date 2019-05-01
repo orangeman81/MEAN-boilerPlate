@@ -1,0 +1,27 @@
+@import './../../../leaves/animations';
+@import './../../../leaves/variables';
+
+:host::ng-deep {
+    width: 100%;
+    min-height: 200px;
+    height: auto;
+    border-top: solid 1px $lineGray;
+    background: $lGray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    animation: slide-out .3s ease-out;
+    z-index: 999;
+    @media screen and (max-width: $mobile) {
+        flex-direction: column;
+        align-items: initial;
+        span:last-child {
+            margin-top: 30px;
+            justify-content: space-between
+        }
+    }
+}

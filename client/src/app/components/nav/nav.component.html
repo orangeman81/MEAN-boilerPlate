@@ -1,0 +1,16 @@
+<nav>
+  <a [routerLink]="['/']" routerLinkActive="active" class="reverse"><i class="material-icons tile-icon">home</i></a>
+  <ul *ngIf="$logged | async">
+    <li>
+      <a [routerLink]="['/todo']" routerLinkActive="active" class="reverse"><i
+          class="material-icons tile-icon">check_circle_outline</i></a>
+    </li>
+    <li>
+      <a [routerLink]="['/messages']" routerLinkActive="active" class="reverse"><i
+          class="material-icons tile-icon">chat</i></a>
+    </li>
+    <li>
+      <a (click)="logout()" class="reverse"><i class="material-icons tile-icon">exit_to_app</i></a>
+    </li>
+  </ul>
+</nav>

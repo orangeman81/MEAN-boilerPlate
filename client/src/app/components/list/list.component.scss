@@ -1,0 +1,42 @@
+@import './../../../leaves/animations';
+@import './../../../leaves/variables';
+:host::ng-deep {
+    ul {
+        li {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 16px;
+            animation: slide-out .3s ease-out;
+            &:not(:last-child) {
+                border-bottom: solid 1px $lineGray;
+            }
+            &>span.withIcon {
+                display: flex;
+                align-items: center
+            }
+            @media screen and (max-width: $mobile) {
+                flex-direction: column;
+                align-items: initial;
+                footer {
+                    margin-top: 24px
+                }
+            }
+        }
+        li:nth-child(even) {
+            background: $lGray;
+        }
+        li.movList {
+            text-align: center;
+            nav {
+                display: flex;
+                flex-basis: 60%;
+                align-items: center;
+                span {
+                    flex-basis: 33.33%;
+                }
+            }
+        }
+    }
+}
