@@ -1,0 +1,18 @@
+<li [@openList]="open ? 'open' : 'closed'">
+  <header>
+    <span>
+      <h3>
+        {{title}}
+      </h3>
+      <p>{{subtitle}}</p>
+    </span>
+    <span>
+      <i class="material-icons" [@rotateIcon]="open ? 'up' : 'down'">
+        expand_more
+      </i>
+    </span>
+  </header>
+  <div class="content" @showContent *ngIf="open">
+    <ng-content></ng-content>
+  </div>
+</li>

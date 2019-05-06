@@ -22,13 +22,7 @@
     </footer>
   </li>
 </lv-list>
-<lv-dialog *ngIf="dialog">
-  <span>
-    <h3>Delete {{dialogPayload.name}}?</h3>
-    <p>{{dialogPayload.serial}}</p>
-  </span>
-  <span class="actions">
-    <button (click)="dialog = false">cancel</button>
-    <button (click)="delete()">delete</button>
-  </span>
+<lv-dialog (action)="delete($event)">
+  <h3>Delete ?</h3>
+  <p>item</p>
 </lv-dialog>

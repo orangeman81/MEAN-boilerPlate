@@ -10,12 +10,16 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { LoaderComponent } from './loader/loader.component';
+import { ExpansionListComponent } from './expansion-list/expansion-list.component';
+import { ExpandableComponent } from './expansion-list/expandable/expandable.component';
 
 @NgModule({
   declarations: [
     NavComponent,
     FooterComponent,
     ListComponent,
+    ExpansionListComponent,
+    ExpandableComponent,
     SelectComponent,
     PaginatorComponent,
     SearchBarComponent,
@@ -34,6 +38,8 @@ import { LoaderComponent } from './loader/loader.component';
     NavComponent,
     FooterComponent,
     ListComponent,
+    ExpansionListComponent,
+    ExpandableComponent,
     PaginatorComponent,
     SearchBarComponent,
     DialogComponent,

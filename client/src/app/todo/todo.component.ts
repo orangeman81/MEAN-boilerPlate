@@ -20,6 +20,9 @@ export class TodoComponent implements OnInit, OnDestroy {
   constructor(private store: TodoStore, private auth: AuthStore) { }
 
   ngOnInit() {
+    // this.sub = this.store.connect('todo')
+    //   .subscribe(console.log);
+
     this.$userId = this.auth.$state
       .pipe(
         map((auth: AuthState) => auth.user._id)

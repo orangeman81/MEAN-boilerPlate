@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, first, last, tap } from 'rxjs/operators';
+import { first, last } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import io from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,35 @@ export class ApiService {
 
   apiUrl: string = environment.apiUrl;
 
+  get socket() {
+    const token = localStorage.getItem('token');
+    return io(
+      this.apiUrl,
+      {
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              token
+            }
+          }
+        }
+      }
+    );
+  }
+
   constructor(private http: HttpClient) { }
+
+  $connect(connection: string) {
+    let observable = new Observable(observer => {
+      this.socket.on(connection, (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    })
+    return observable;
+  }
 
   $findAll(url: string): Observable<any> {
     return this.http.get<any>(this.apiUrl + url)

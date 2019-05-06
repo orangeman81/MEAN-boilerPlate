@@ -16,6 +16,10 @@ export class TodoStore extends Store<TodoState> implements Actions<Todo> {
     super(new TodoState());
   }
 
+  connect(connection: string) {
+    return this.api.$connect('todo');
+  }
+
   findAll(): Observable<Todo[]> {
 
     return this.$state
