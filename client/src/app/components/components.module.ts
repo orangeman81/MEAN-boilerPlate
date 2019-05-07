@@ -20,7 +20,6 @@ import { ExpandableComponent } from './expansion-list/expandable/expandable.comp
     ListComponent,
     ExpansionListComponent,
     ExpandableComponent,
-    SelectComponent,
     PaginatorComponent,
     SearchBarComponent,
     DialogComponent,
