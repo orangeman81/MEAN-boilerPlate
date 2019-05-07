@@ -24,6 +24,9 @@
                 }
             }
         }
+        li:nth-child(odd) {
+            background: $bodyGray;
+        }
         li:nth-child(even) {
             background: $lGray;
         }

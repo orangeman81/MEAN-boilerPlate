@@ -1,10 +1,10 @@
-<div id="overlay" *ngIf="open" (click)="open = false"></div>
+<div id="overlay" *ngIf="open" (click)="action.emit(false)"></div>
 <div class="dialog" @showContent *ngIf="open">
     <span>
         <ng-content></ng-content>
     </span>
     <span class="actions">
-        <button (click)="open = false">cancel</button>
-        <button (click)="action.emit(data)">accept</button>
+        <button (click)="action.emit(false)">cancel</button>
+        <button (click)="action.emit(true)">accept</button>
     </span>
 </div>

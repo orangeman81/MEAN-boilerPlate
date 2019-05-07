@@ -1,8 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TodoStore } from 'src/app/providers/todo-store.service';
 import { TodoState } from 'src/app/models/todoState';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -11,15 +10,19 @@ import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 })
 export class TodoListComponent {
 
-  @ViewChild(DialogComponent)
-  dialog: DialogComponent;
+  toggleDialog: boolean = false;
+  dialogData: any;
   $todos: Observable<TodoState> = this.store.$state;
 
   constructor(private store: TodoStore) { }
 
-  openDialog(data) {
-    this.dialog.open = true;
-    this.dialog.data = data;
+  dialogControls(data) {
+    this.toggleDialog = true;
+    this.dialogData = data;
+  }
+
+  dialogActions(event) {
+    event ? (console.log(this.dialogData, " deleted"), this.toggleDialog = false) : this.toggleDialog = false;
   }
 
 }
