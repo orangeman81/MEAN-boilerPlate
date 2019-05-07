@@ -17,12 +17,12 @@
       </header>
     </span>
     <footer class="actions">
-      <button (click)="openDialog(todo)">delete</button>
+      <button (click)="dialogControls(todo)">delete</button>
       <a [routerLink]="['/warehouse/details', todo._id]" class="btn">details</a>
     </footer>
   </li>
 </lv-list>
-<lv-dialog (action)="delete($event)">
-  <h3>Delete ?</h3>
-  <p>item</p>
+<lv-dialog [open]="toggleDialog" (action)="dialogActions($event)">
+  <h3>Delete {{dialogData?.title}}?</h3>
+  <p>item {{dialogData?.description}}</p>
 </lv-dialog>

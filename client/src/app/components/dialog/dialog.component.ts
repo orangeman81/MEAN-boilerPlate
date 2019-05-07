@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { showContent } from './dialog.animations';
 
 @Component({
@@ -7,9 +7,10 @@ import { showContent } from './dialog.animations';
   styleUrls: ['./dialog.component.scss'],
   animations: [
     showContent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogComponent {
+export class DialogComponent implements OnChanges {
 
   @Input()
   open: boolean = false;
@@ -17,9 +18,8 @@ export class DialogComponent {
   @Output()
   action: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @Input()
-  data: any;
-
-  constructor() { }
+  ngOnChanges(changes: SimpleChanges) {
+    this.open = changes.open.currentValue;
+  }
 
 }
